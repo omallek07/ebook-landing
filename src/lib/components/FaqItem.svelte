@@ -1,3 +1,18 @@
+<script>
+  import chevronDown from '$assets/icons/chevron-down.svg';
+  const { faq, isExpanded, ...props } = $props();
+</script>
+
+<button class="container" class:container-expanded={isExpanded} {...props}>
+  <div class="question-and-answer">
+    <p class="question mb-s">
+      {faq.question}
+    </p>
+    <p class="answer">{faq.answer}</p>
+  </div>
+  <img src={chevronDown} alt="Chevron down">
+</button>
+
 <style>
   .container {
     display: flex;

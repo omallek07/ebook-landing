@@ -1,4 +1,12 @@
 <script>
+  import { FaqItem, Button } from "$components";
+  import twitterIcon from '$assets/icons/twitter.webp';
+
+  let expandedIndex = $state(-1);
+  function expandHandler(index) {
+    expandedIndex = index === expandedIndex ? -1 : index;
+  }
+
   const faqs = [
   {
     question: "What will I learn from this ebook?",
@@ -25,8 +33,29 @@
     answer:
       "Absolutely. We offer a 30-day money-back guarantee. If you feel that the ebook did not meet your expectations or didn't provide the value you were looking for, simply contact us within 30 days of your purchase, and we’ll issue a full refund—no questions asked.",
   },
-];
+  ];
 </script>
+
+<section class="faq-section">
+  <h2 class="mb-l">Frequently asked questions</h2>
+  <div class="faq-container">
+    {#each faqs as faq, index}
+      <FaqItem {faq} {index} isExpanded={index === expandedIndex} onclick={() => expandHandler(index)} />
+    {/each}
+  </div>
+  <div class="additional-info mt-m">
+    <Button class="mt-5">BUY NOW</Button> 
+    <p class="mt-m">Any other questions?</p>
+    <a href="https://x.com/KIZO_ES">
+      <p>
+        Hit me up on twitter <img src={twitterIcon}
+         class="twitter-icon"
+         alt="Twitter" />
+      </p>
+    </a>
+  </div>
+</section>
+
 <style>
   .additional-info {
     display: flex;
