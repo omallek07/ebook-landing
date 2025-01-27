@@ -34,30 +34,36 @@
   },
 ];
 
-let selectedChapterIdx = $state(0);
+let selectedChapterNumber = $state(1);
+let selectedChapter = $derived(chapters.find(chapter => chapter.number === selectedChapterNumber));
+
+function selectChapter(chapter) {
+  selectedChapterNumber = chapter.number
+}
 </script>
 
 <section class="chapter-preview default-margin">
   <h2 class="mb-l">What you're getting</h2>
   <div class="chapter-container">
     <ul>
-      {#each chapters as chapter, idx}
+      {#each chapters as chapter}
       <li>
-        <button class={`chapter-title ${selectedChapterIdx === idx ? 'selected-chapter-title' : ''}`} aria-controls="chapter-info-1"
-        aria-expanded="true"
-        onclick={() => selectedChapterIdx = idx}
+        <button class="chapter-title"
+        class:selected-chapter-title={chapter.number === selectedChapterNumber} aria-controls={`chapter-info-${chapter.number}`}
+        aria-expanded={chapter.number === selectedChapterNumber}
+        onclick={() => selectChapter(chapter)}
         >
-          <h3>{chapter.title}</h3>
+          <h3>Chapter {chapter.number} : {chapter.title}</h3>
         </button>
       </li>
       {/each}
     </ul>
     <div class="chapter-info">
       <h3 class="chapter-strapline italic mb-5">
-        {chapters[selectedChapterIdx]?.strapline}
+        {selectedChapter.strapline}
       </h3>
       <p>
-        {chapters[selectedChapterIdx]?.excerpt}
+        {selectedChapter.excerpt}
       </p>
     </div>
   </div>
@@ -65,7 +71,7 @@ let selectedChapterIdx = $state(0);
 
 <style>
   .chapter-preview {
-    padding: 80px;
+    padding: 80px 0;
     margin-left: 12vw;
     margin-right: 20vw;
     max-width: 1150px;
